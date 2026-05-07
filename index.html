@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EchoNote - Your second brain for everything on Mac</title>
+  <style>
+    :root {
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a14;
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.6);
+      --text-muted: rgba(255, 255, 255, 0.3);
+      --accent: #6b6ef9;
+      --accent-soft: #a89cff;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.08);
+      --radius-card: 20px;
+      --radius-btn: 14px;
+      --radius-pill: 999px;
+      --section-padding: 120px;
+      --container: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      cursor: default;
+    }
+
+    .container {
+      width: min(100% - 48px, var(--container));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: var(--section-padding) 0;
+      background: var(--bg-primary);
+    }
+
+    .section.alt {
+      background: var(--bg-secondary);
+    }
+
+    .wordmark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .wordmark-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      display: inline-block;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      backdrop-filter: blur(20px);
+      background: rgba(0, 0, 0, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-inner {
+      width: min(100% - 40px, 1200px);
+      margin: 0 auto;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .waitlist-btn {
+      border: 0;
+      border-radius: var(--radius-pill);
+      padding: 10px 22px;
+      font-size: 14px;
+      letter-spacing: 0.01em;
+      color: #fff;
+      background: var(--accent);
+      transition: background 0.2s ease, transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .waitlist-btn:hover {
+      background: #7b7eff;
+      transform: translateY(-1px);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 0 96px;
+      background: var(--bg-primary);
+    }
+
+    .hero-content {
+      width: min(100% - 48px, 1200px);
+      margin: 0 auto;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      color: var(--accent-soft);
+      background: rgba(107, 110, 249, 0.15);
+      border: 1px solid rgba(107, 110, 249, 0.3);
+      margin-bottom: 28px;
+    }
+
+    .hero-title {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      letter-spacing: -2px;
+      line-height: 1.06;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-title span {
+      display: block;
+    }
+
+    .hero-sub {
+      margin: 24px auto 0;
+      max-width: 600px;
+      font-size: 19px;
+      color: rgba(255, 255, 255, 0.55);
+      line-height: 1.7;
+    }
+
+    .hero-cta-wrap {
+      margin-top: 40px;
+    }
+
+    .cta-primary {
+      border: 0;
+      border-radius: var(--radius-pill);
+      padding: 16px 40px;
+      font-size: 17px;
+      color: #fff;
+      background: var(--accent);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .cta-primary:hover {
+      background: #7b7eff;
+      transform: translateY(-1px);
+    }
+
+    .tiny-note {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.01em;
+    }
+
+    .hero-image-shell {
+      position: relative;
+      margin: 64px auto 0;
+      width: min(100%, 900px);
+    }
+
+    .hero-image-shell::before {
+      content: "";
+      position: absolute;
+      inset: -18% -12%;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 60%, rgba(107, 110, 249, 0.18) 0%, transparent 70%);
+    }
+
+    .hero-image-placeholder {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-card);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(24px);
+    }
+
+    .asset-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.38);
+      letter-spacing: 0.02em;
+      padding: 14px;
+      position: relative;
+    }
+
+    .asset-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    .asset-placeholder::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+      pointer-events: none;
+    }
+
+    .usp {
+      text-align: center;
+    }
+
+    .usp-statement {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 300;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+    }
+
+    .compare-grid {
+      max-width: 980px;
+      margin: 64px auto 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 48px;
+      text-align: left;
+    }
+
+    .compare-col h3 {
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 22px;
+      letter-spacing: -0.01em;
+    }
+
+    .bullet-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .bullet-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+    }
+
+    .bullet-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex: 0 0 auto;
+    }
+
+    .traditional li {
+      color: rgba(255, 165, 205, 0.78);
+    }
+
+    .traditional .bullet-dot {
+      background: rgba(255, 165, 205, 0.9);
+      box-shadow: 0 0 8px rgba(255, 165, 205, 0.35);
+    }
+
+    .echonote li {
+      color: var(--accent-soft);
+    }
+
+    .echonote .bullet-dot {
+      background: var(--accent-soft);
+      box-shadow: 0 0 8px rgba(168, 156, 255, 0.4);
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      display: inline-block;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.16;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      backdrop-filter: blur(24px);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-card);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .feature-card h3 {
+      font-size: 24px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+    }
+
+    .feature-card p {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.72;
+    }
+
+    .inline-query {
+      display: inline-flex;
+      align-items: center;
+      border-radius: var(--radius-btn);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      padding: 8px 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 14px;
+      color: var(--accent-soft);
+      margin-bottom: 12px;
+    }
+
+    .feature-shot {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .memory-demo {
+      text-align: center;
+    }
+
+    .demo-panel {
+      width: min(100%, 960px);
+      margin: 64px auto 0;
+      aspect-ratio: 16 / 9;
+      border-radius: var(--radius-card);
+      backdrop-filter: blur(24px);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+    }
+
+    .memory-note {
+      margin-top: 26px;
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 17px;
+    }
+
+    .social-pills {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
+
+    .social-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 24px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .social-pill .bullet-dot {
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .final-cta {
+      text-align: center;
+      padding: 160px 0;
+    }
+
+    .final-cta h2 {
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .final-cta p {
+      max-width: 480px;
+      margin: 0 auto 40px;
+      font-size: 18px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding: 40px 0;
+      background: var(--bg-primary);
+    }
+
+    .footer-inner {
+      width: min(100% - 48px, 1200px);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .copyright {
+      color: var(--text-secondary);
+      font-size: 13px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      will-change: opacity, transform;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        box-shadow: 0 0 0 0 rgba(107, 110, 249, 0.28);
+      }
+      50% {
+        box-shadow: 0 0 0 10px rgba(107, 110, 249, 0.07);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .feature-card {
+        padding: 34px 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      :root {
+        --section-padding: 96px;
+      }
+
+      .container,
+      .hero-content,
+      .footer-inner,
+      .nav-inner {
+        width: min(100% - 32px, 1200px);
+      }
+
+      .nav-inner {
+        height: 64px;
+      }
+
+      .wordmark {
+        font-size: 18px;
+      }
+
+      .waitlist-btn {
+        padding: 9px 16px;
+        font-size: 13px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 120px;
+      }
+
+      .hero-sub {
+        font-size: 17px;
+      }
+
+      .cta-primary {
+        width: 100%;
+        max-width: 360px;
+      }
+
+      .compare-grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-top: 48px;
+      }
+
+      .social-pills {
+        gap: 14px;
+      }
+
+      .social-pill {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .final-cta {
+        padding: 120px 0;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="wordmark"><span class="wordmark-dot"></span>EchoNote</div>
+      <button class="waitlist-btn">Join Waitlist</button>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-badge reveal">Now in Early Access · Mac</div>
+      <h1 class="hero-title reveal">
+        <span>EchoNote</span>
+        <span>Your second brain for everything on Mac.</span>
+      </h1>
+      <p class="hero-sub reveal">
+        EchoNote quietly builds a searchable memory across meetings, tabs, copied text, and conversations in your entire Mac ecosystem. Retrieve any past thought naturally.
+      </p>
+      <div class="hero-cta-wrap reveal">
+        <button class="cta-primary">Join the Early Access Waitlist</button>
+        <p class="tiny-note">Free to join. Mac only. No spam.</p>
+      </div>
+      <div class="hero-image-shell reveal">
+        <div class="hero-image-placeholder asset-placeholder">
+          <img src="./image1.webp" alt="EchoNote product screenshot" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section alt usp">
+    <div class="container">
+      <p class="usp-statement reveal">"Unlike note apps that wait for you to write things down — EchoNote is already there."</p>
+      <div class="compare-grid reveal">
+        <div class="compare-col traditional">
+          <h3>Traditional note apps</h3>
+          <ul class="bullet-list">
+            <li><span class="bullet-dot"></span>Require manual input</li>
+            <li><span class="bullet-dot"></span>Lose context instantly</li>
+            <li><span class="bullet-dot"></span>Search only what you saved</li>
+          </ul>
+        </div>
+        <div class="compare-col echonote">
+          <h3>EchoNote</h3>
+          <ul class="bullet-list">
+            <li><span class="bullet-dot"></span>Works completely passively</li>
+            <li><span class="bullet-dot"></span>Builds context relationships</li>
+            <li><span class="bullet-dot"></span>Retrieves anything you've ever seen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-label">KEY FEATURES</span>
+        <h2 class="section-title">Everything you think. Nothing you lose.</h2>
+      </div>
+      <div class="features-grid stagger">
+        <article class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+              <line x1="5" y1="15" x2="25" y2="15" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"></line>
+              <circle cx="7" cy="15" r="3" fill="#6B6EF9"></circle>
+              <circle cx="15" cy="15" r="3" fill="#6B6EF9"></circle>
+              <circle cx="23" cy="15" r="3" fill="#6B6EF9"></circle>
+            </svg>
+          </div>
+          <h3>Timeline Recall.</h3>
+          <p>A visual rewind of your entire digital day. Scrub back through everything you saw, read, and worked on — hour by hour.</p>
+          <div class="feature-shot asset-placeholder">
+            <img src="./image2.webp" alt="EchoNote timeline interface screenshot" />
+          </div>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+              <rect x="4" y="4" width="6" height="6" rx="1.2" fill="#A89CFF"></rect>
+              <rect x="12" y="4" width="6" height="6" rx="1.2" fill="#6B6EF9"></rect>
+              <rect x="20" y="4" width="6" height="6" rx="1.2" fill="#8FA1FF"></rect>
+              <rect x="4" y="12" width="6" height="6" rx="1.2" fill="#A89CFF"></rect>
+              <rect x="12" y="12" width="6" height="6" rx="1.2" fill="#8FA1FF"></rect>
+              <rect x="20" y="12" width="6" height="6" rx="1.2" fill="#6B6EF9"></rect>
+              <rect x="4" y="20" width="6" height="6" rx="1.2" fill="#8FA1FF"></rect>
+              <rect x="12" y="20" width="6" height="6" rx="1.2" fill="#A89CFF"></rect>
+              <rect x="20" y="20" width="6" height="6" rx="1.2" fill="#6B6EF9"></rect>
+            </svg>
+          </div>
+          <h3>Universal Memory Indexing.</h3>
+          <p>Meetings, tabs, copied text, screenshots, tasks, ideas — EchoNote indexes it all, automatically, without a single click.</p>
+        </article>
+
+        <article class="feature-card reveal">
+          <div class="feature-icon">
+            <svg width="30" height="30" viewBox="0 0 30 30" fill="none" aria-hidden="true">
+              <path d="M6.5 8.5H23.5C24.6 8.5 25.5 9.4 25.5 10.5V18.5C25.5 19.6 24.6 20.5 23.5 20.5H13.2L8.6 24V20.5H6.5C5.4 20.5 4.5 19.6 4.5 18.5V10.5C4.5 9.4 5.4 8.5 6.5 8.5Z" stroke="#6B6EF9" stroke-width="1.5"></path>
+              <line x1="12" y1="12.5" x2="12" y2="16.5" stroke="#A89CFF" stroke-width="1.8" stroke-linecap="round"></line>
+            </svg>
+          </div>
+          <h3>Natural Language Retrieval.</h3>
+          <span class="inline-query">Find the design idea I saw last Thursday.</span>
+          <p>Just ask. EchoNote understands context, not just keywords.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt memory-demo">
+    <div class="container">
+      <h2 class="section-title reveal">Your day, remembered.</h2>
+      <div class="demo-panel asset-placeholder reveal">
+        <img src="./image3.webp" alt="EchoNote memory visualization" />
+      </div>
+      <p class="memory-note reveal">Passively captured. Instantly recalled. Zero effort.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="social-pills stagger">
+        <div class="social-pill reveal"><span class="bullet-dot"></span>Zero setup required</div>
+        <div class="social-pill reveal"><span class="bullet-dot"></span>Works across your entire Mac</div>
+        <div class="social-pill reveal"><span class="bullet-dot"></span>Privacy-first — stays on device</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt final-cta">
+    <div class="container">
+      <h2 class="reveal">Remember everything. Effortlessly.</h2>
+      <p class="reveal">Join the waitlist and be first to experience EchoNote when it launches.</p>
+      <div class="reveal">
+        <button class="cta-primary">Join the Early Access Waitlist</button>
+        <p class="tiny-note">Mac only · Free early access · No credit card</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="wordmark"><span class="wordmark-dot"></span>EchoNote</div>
+      <p class="copyright">© 2025 EchoNote. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const revealEls = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("in-view");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+      );
+
+      revealEls.forEach((el) => observer.observe(el));
+
+      const staggerParents = document.querySelectorAll(".stagger");
+      staggerParents.forEach((parent) => {
+        const children = parent.querySelectorAll(".reveal");
+        children.forEach((child, index) => {
+          child.style.transitionDelay = (index * 100) + "ms";
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
