@@ -767,8 +767,9 @@
     // ✅ WEBHOOK SUBMISSION FUNCTION
     // ============================================================
     const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyxuWxWeaaXQPNzqBByPpDTheRpKAhd05Tro3Hgw56hLEKrnH6k-mu6VjXh-12VSM7N/exec";
-    const LANDING_URL = "https://echonote.remyndai.com";
-    const THANKYOU_URL = "https://echonote.remyndai.com/thank-you.html";
+    const LANDING_URL = new URL("/", window.location.href).href;
+    const THANKYOU_PATH = "./thank-you.html";
+    const THANKYOU_URL = new URL(THANKYOU_PATH, window.location.href).href;
 
     // Read UTM params once on page load
     const urlParams = new URLSearchParams(window.location.search);
@@ -835,7 +836,7 @@
         });
 
         // Redirect to thank-you page
-        window.location.href = THANKYOU_URL;
+        window.location.assign(THANKYOU_PATH);
 
       } catch (err) {
         status.textContent = 'Something went wrong — please try again.';
@@ -867,7 +868,7 @@
           formLocation: 'footer'
         });
 
-        window.location.href = THANKYOU_URL;
+        window.location.assign(THANKYOU_PATH);
 
       } catch (err) {
         status.textContent = 'Something went wrong — please try again.';
