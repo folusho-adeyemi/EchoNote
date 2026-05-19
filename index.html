@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>EchoNote - Your second brain for everything on Mac</title>
+
+  <!-- ✅ GA4 Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WXVVB2ETRN"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WXVVB2ETRN');
+  </script>
+
   <style>
     :root {
       --bg-primary: #000000;
@@ -22,15 +32,8 @@
       --container: 1200px;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: -apple-system, "SF Pro Display", BlinkMacSystemFont, sans-serif;
@@ -64,9 +67,7 @@
       background: rgba(0, 0, 0, 0.84);
     }
 
-    .section.alt {
-      background: rgba(10, 10, 20, 0.84);
-    }
+    .section.alt { background: rgba(10, 10, 20, 0.84); }
 
     .wordmark {
       display: inline-flex;
@@ -120,10 +121,7 @@
       cursor: pointer;
     }
 
-    .waitlist-btn:hover {
-      background: #7b7eff;
-      transform: translateY(-1px);
-    }
+    .waitlist-btn:hover { background: #7b7eff; transform: translateY(-1px); }
 
     .hero {
       min-height: 100vh;
@@ -162,9 +160,7 @@
       margin: 0 auto;
     }
 
-    .hero-title span {
-      display: block;
-    }
+    .hero-title span { display: block; }
 
     .hero-sub {
       margin: 24px auto 0;
@@ -174,9 +170,69 @@
       line-height: 1.7;
     }
 
-    .hero-cta-wrap {
+    /* ✅ INLINE SIGNUP FORM */
+    .hero-form-wrap {
       margin-top: 40px;
     }
+
+    .hero-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .form-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-btn);
+      padding: 14px 18px;
+      font-size: 15px;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .form-input::placeholder { color: rgba(255,255,255,0.35); }
+
+    .form-input:focus {
+      border-color: rgba(107, 110, 249, 0.6);
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .form-select {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-btn);
+      padding: 14px 18px;
+      font-size: 15px;
+      color: rgba(255,255,255,0.7);
+      outline: none;
+      transition: border-color 0.2s ease;
+      font-family: inherit;
+      width: 100%;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='rgba(255,255,255,0.4)' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    .form-select option { background: #1a1a2e; color: #fff; }
 
     .cta-primary {
       display: inline-block;
@@ -190,19 +246,29 @@
       cursor: pointer;
       transition: background 0.2s ease, transform 0.2s ease;
       animation: pulse 2.5s ease-in-out infinite;
+      width: 100%;
+      font-family: inherit;
     }
 
-    .cta-primary:hover {
-      background: #7b7eff;
-      transform: translateY(-1px);
-    }
+    .cta-primary:hover { background: #7b7eff; transform: translateY(-1px); }
+    .cta-primary:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     .tiny-note {
-      margin-top: 12px;
+      margin-top: 4px;
       font-size: 12px;
       color: var(--text-muted);
       letter-spacing: 0.01em;
     }
+
+    .form-status {
+      font-size: 14px;
+      color: var(--accent-soft);
+      min-height: 20px;
+      text-align: center;
+    }
+
+    .form-status.error { color: rgba(255, 120, 120, 0.9); }
+    .form-status.success { color: #7effa0; }
 
     .hero-image-shell {
       position: relative;
@@ -260,9 +326,7 @@
       pointer-events: none;
     }
 
-    .usp {
-      text-align: center;
-    }
+    .usp { text-align: center; }
 
     .usp-statement {
       max-width: 700px;
@@ -289,11 +353,7 @@
       letter-spacing: -0.01em;
     }
 
-    .bullet-list {
-      list-style: none;
-      display: grid;
-      gap: 14px;
-    }
+    .bullet-list { list-style: none; display: grid; gap: 14px; }
 
     .bullet-list li {
       display: flex;
@@ -309,28 +369,21 @@
       flex: 0 0 auto;
     }
 
-    .traditional li {
-      color: rgba(255, 165, 205, 0.78);
-    }
+    .traditional li { color: rgba(255, 165, 205, 0.78); }
 
     .traditional .bullet-dot {
       background: rgba(255, 165, 205, 0.9);
       box-shadow: 0 0 8px rgba(255, 165, 205, 0.35);
     }
 
-    .echonote li {
-      color: var(--accent-soft);
-    }
+    .echonote li { color: var(--accent-soft); }
 
     .echonote .bullet-dot {
       background: var(--accent-soft);
       box-shadow: 0 0 8px rgba(168, 156, 255, 0.4);
     }
 
-    .section-head {
-      text-align: center;
-      margin-bottom: 52px;
-    }
+    .section-head { text-align: center; margin-bottom: 52px; }
 
     .section-label {
       font-size: 12px;
@@ -376,17 +429,9 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .feature-card h3 {
-      font-size: 24px;
-      font-weight: 400;
-      letter-spacing: -0.02em;
-    }
+    .feature-card h3 { font-size: 24px; font-weight: 400; letter-spacing: -0.02em; }
 
-    .feature-card p {
-      font-size: 17px;
-      color: var(--text-secondary);
-      line-height: 1.72;
-    }
+    .feature-card p { font-size: 17px; color: var(--text-secondary); line-height: 1.72; }
 
     .inline-query {
       display: inline-flex;
@@ -395,7 +440,7 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(255, 255, 255, 0.03);
       padding: 8px 12px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
       font-size: 14px;
       color: var(--accent-soft);
       margin-bottom: 12px;
@@ -408,9 +453,7 @@
       background: rgba(255, 255, 255, 0.02);
     }
 
-    .memory-demo {
-      text-align: center;
-    }
+    .memory-demo { text-align: center; }
 
     .demo-panel {
       width: min(100%, 960px);
@@ -448,15 +491,9 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .social-pill .bullet-dot {
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-    }
+    .social-pill .bullet-dot { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
 
-    .final-cta {
-      text-align: center;
-      padding: 160px 0;
-    }
+    .final-cta { text-align: center; padding: 160px 0; }
 
     .final-cta h2 {
       font-size: clamp(40px, 6vw, 72px);
@@ -474,6 +511,16 @@
       line-height: 1.7;
     }
 
+    /* ✅ FINAL CTA FORM (same style, smaller) */
+    .final-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
     footer {
       border-top: 1px solid rgba(255, 255, 255, 0.06);
       padding: 40px 0;
@@ -489,10 +536,7 @@
       gap: 20px;
     }
 
-    .copyright {
-      color: var(--text-secondary);
-      font-size: 13px;
-    }
+    .copyright { color: var(--text-secondary); font-size: 13px; }
 
     .reveal {
       opacity: 0;
@@ -501,111 +545,57 @@
       will-change: opacity, transform;
     }
 
-    .reveal.in-view {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
 
     @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 0 0 0 rgba(107, 110, 249, 0.28);
-      }
-      50% {
-        box-shadow: 0 0 0 10px rgba(107, 110, 249, 0.07);
-      }
+      0%, 100% { box-shadow: 0 0 0 0 rgba(107, 110, 249, 0.28); }
+      50% { box-shadow: 0 0 0 10px rgba(107, 110, 249, 0.07); }
     }
 
     @media (max-width: 1024px) {
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .feature-card {
-        padding: 34px 24px;
-      }
+      .features-grid { grid-template-columns: 1fr; }
+      .feature-card { padding: 34px 24px; }
     }
 
     @media (max-width: 768px) {
-      :root {
-        --section-padding: 96px;
-      }
+      :root { --section-padding: 96px; }
 
-      .container,
-      .hero-content,
-      .footer-inner,
-      .nav-inner {
+      .container, .hero-content, .footer-inner, .nav-inner {
         width: min(100% - 32px, 1200px);
       }
 
-      .nav-inner {
-        height: 64px;
-      }
+      .nav-inner { height: 64px; }
+      .wordmark { font-size: 18px; }
+      .waitlist-btn { padding: 9px 16px; font-size: 13px; }
 
-      .wordmark {
-        font-size: 18px;
-      }
+      .hero { min-height: auto; padding-top: 120px; }
+      .hero-sub { font-size: 17px; }
 
-      .waitlist-btn {
-        padding: 9px 16px;
-        font-size: 13px;
-      }
+      .form-row { flex-direction: column; }
+      .cta-primary { width: 100%; max-width: 360px; }
 
-      .hero {
-        min-height: auto;
-        padding-top: 120px;
-      }
-
-      .hero-sub {
-        font-size: 17px;
-      }
-
-      .cta-primary {
-        width: 100%;
-        max-width: 360px;
-      }
-
-      .compare-grid {
-        grid-template-columns: 1fr;
-        gap: 36px;
-        margin-top: 48px;
-      }
-
-      .social-pills {
-        gap: 14px;
-      }
-
-      .social-pill {
-        width: 100%;
-        justify-content: center;
-      }
-
-      .final-cta {
-        padding: 120px 0;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        text-align: center;
-      }
+      .compare-grid { grid-template-columns: 1fr; gap: 36px; margin-top: 48px; }
+      .social-pills { gap: 14px; }
+      .social-pill { width: 100%; justify-content: center; }
+      .final-cta { padding: 120px 0; }
+      .footer-inner { flex-direction: column; text-align: center; }
     }
 
-    @media (max-width: 640px) {
-      .shader-background {
-        opacity: 0.2;
-      }
-    }
+    @media (max-width: 640px) { .shader-background { opacity: 0.2; } }
   </style>
 </head>
 <body>
   <canvas id="shader-bg" class="shader-background" aria-hidden="true"></canvas>
+
   <nav class="nav">
     <div class="nav-inner">
       <div class="wordmark"><span class="wordmark-dot"></span>EchoNote</div>
-      <a class="waitlist-btn" href="https://forms.gle/k6UygFaMvr6dqM1F7" target="_blank" rel="noopener noreferrer">Join Waitlist</a>
+      <!-- Nav CTA scrolls to the hero form instead of opening Google Form -->
+      <a class="waitlist-btn" href="#signup" onclick="document.getElementById('hero-email').focus(); return false;">Join Waitlist</a>
     </div>
   </nav>
 
-  <header class="hero">
+  <header class="hero" id="signup">
     <div class="hero-content">
       <div class="hero-badge reveal">Now in Early Access · Mac</div>
       <h1 class="hero-title reveal">
@@ -615,10 +605,30 @@
       <p class="hero-sub reveal">
         EchoNote quietly builds a searchable memory across meetings, tabs, copied text, and conversations in your entire Mac ecosystem. Retrieve any past thought naturally.
       </p>
-      <div class="hero-cta-wrap reveal">
-        <a class="cta-primary" href="https://forms.gle/k6UygFaMvr6dqM1F7" target="_blank" rel="noopener noreferrer">Join the Early Access Waitlist</a>
-        <p class="tiny-note">Free to join. Mac only. No spam.</p>
+
+      <!-- ✅ INLINE SIGNUP FORM -->
+      <div class="hero-form-wrap reveal">
+        <form class="hero-form" id="echonote-form-hero">
+          <div class="form-row">
+            <input class="form-input" type="text" id="hero-name" placeholder="Your name" autocomplete="name" />
+            <input class="form-input" type="email" id="hero-email" placeholder="Your email" required autocomplete="email" />
+          </div>
+          <select class="form-select" id="hero-role">
+            <option value="">What best describes you?</option>
+            <option value="student">Student</option>
+            <option value="founder">Founder / Entrepreneur</option>
+            <option value="professional">Working Professional</option>
+            <option value="researcher">Researcher / Academic</option>
+            <option value="engineer">Engineer / Developer</option>
+            <option value="other">Other</option>
+          </select>
+          <input class="form-input" type="text" id="hero-custom" placeholder="What would you use EchoNote for most?" />
+          <button class="cta-primary" type="submit" id="hero-submit-btn">Join the Early Access Waitlist</button>
+          <p class="tiny-note">Free to join · Mac only · No spam</p>
+          <p class="form-status" id="hero-form-status"></p>
+        </form>
       </div>
+
       <div class="hero-image-shell reveal">
         <div class="hero-image-placeholder asset-placeholder">
           <img src="./image1.webp" alt="EchoNote product screenshot" />
@@ -731,9 +741,16 @@
     <div class="container">
       <h2 class="reveal">Remember everything. Effortlessly.</h2>
       <p class="reveal">Join the waitlist and be first to experience EchoNote when it launches.</p>
+
+      <!-- ✅ SECOND FORM (bottom CTA) -->
       <div class="reveal">
-        <a class="cta-primary" href="https://forms.gle/k6UygFaMvr6dqM1F7" target="_blank" rel="noopener noreferrer">Join the Early Access Waitlist</a>
-        <p class="tiny-note">Mac only · Free early access · No credit card</p>
+        <form class="final-form" id="echonote-form-footer">
+          <input class="form-input" type="text" id="footer-name" placeholder="Your name" autocomplete="name" style="width:100%;" />
+          <input class="form-input" type="email" id="footer-email" placeholder="Your email" required autocomplete="email" style="width:100%;" />
+          <button class="cta-primary" type="submit" id="footer-submit-btn">Get Early Access</button>
+          <p class="tiny-note">Mac only · Free early access · No credit card</p>
+          <p class="form-status" id="footer-form-status"></p>
+        </form>
       </div>
     </div>
   </section>
@@ -746,24 +763,136 @@
   </footer>
 
   <script>
+    // ============================================================
+    // ✅ WEBHOOK SUBMISSION FUNCTION
+    // ============================================================
+    const WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbyxuWxWeaaXQPNzqBByPpDTheRpKAhd05Tro3Hgw56hLEKrnH6k-mu6VjXh-12VSM7N/exec";
+    const LANDING_URL = "https://echonote.remyndai.com";
+    const THANKYOU_URL = "https://echonote.remyndai.com/thank-you.html";
+
+    // Read UTM params once on page load
+    const urlParams = new URLSearchParams(window.location.search);
+    const utmSource   = urlParams.get('utm_source')   || 'direct';
+    const utmMedium   = urlParams.get('utm_medium')   || 'organic';
+    const utmCampaign = urlParams.get('utm_campaign') || '';
+    const utmContent  = urlParams.get('utm_content')  || '';
+
+    async function submitToWebhook({ name, email, role, customAnswer, formLocation }) {
+      const payload = {
+        candidate_id:         "echonote",
+        product_name:         "EchoNote",
+        product_slug:         "echonote",
+        subdomain:            LANDING_URL,
+        lead_name:            name,
+        lead_email:           email,
+        lead_company_role:    role,
+        source:               utmSource,
+        channel:              utmMedium,
+        campaign:             utmCampaign,
+        utm_source:           utmSource,
+        utm_medium:           utmMedium,
+        utm_campaign:         utmCampaign,
+        utm_content:          utmContent,
+        referrer:             document.referrer || '',
+        landing_page_url:     LANDING_URL,
+        confirmation_page_url: THANKYOU_URL,
+        custom_question:      "What would you use EchoNote for most?",
+        custom_answer:        customAnswer,
+        intent_signal:        role ? `Role: ${role}` : "Signed up from landing page",
+        notes_from_lead:      `Submitted from ${formLocation} form`,
+        consent_captured:     "Yes"
+      };
+
+      // mode: "no-cors" is required for Google Apps Script — response will always be opaque
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+    }
+
+    // ============================================================
+    // ✅ HERO FORM HANDLER
+    // ============================================================
+    document.getElementById('echonote-form-hero').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('hero-submit-btn');
+      const status = document.getElementById('hero-form-status');
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      try {
+        await submitToWebhook({
+          name:         document.getElementById('hero-name').value.trim(),
+          email:        document.getElementById('hero-email').value.trim(),
+          role:         document.getElementById('hero-role').value,
+          customAnswer: document.getElementById('hero-custom').value.trim(),
+          formLocation: 'hero'
+        });
+
+        // Redirect to thank-you page
+        window.location.href = THANKYOU_URL;
+
+      } catch (err) {
+        status.textContent = 'Something went wrong — please try again.';
+        status.className = 'form-status error';
+        btn.disabled = false;
+        btn.textContent = 'Join the Early Access Waitlist';
+      }
+    });
+
+    // ============================================================
+    // ✅ FOOTER FORM HANDLER
+    // ============================================================
+    document.getElementById('echonote-form-footer').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('footer-submit-btn');
+      const status = document.getElementById('footer-form-status');
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+      status.textContent = '';
+      status.className = 'form-status';
+
+      try {
+        await submitToWebhook({
+          name:         document.getElementById('footer-name').value.trim(),
+          email:        document.getElementById('footer-email').value.trim(),
+          role:         '',
+          customAnswer: '',
+          formLocation: 'footer'
+        });
+
+        window.location.href = THANKYOU_URL;
+
+      } catch (err) {
+        status.textContent = 'Something went wrong — please try again.';
+        status.className = 'form-status error';
+        btn.disabled = false;
+        btn.textContent = 'Get Early Access';
+      }
+    });
+
+    // ============================================================
+    // WebGL shader background (unchanged from original)
+    // ============================================================
     (function () {
       const shaderCanvas = document.getElementById("shader-bg");
       if (shaderCanvas && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         const gl = shaderCanvas.getContext("webgl");
-
         if (gl) {
           const vsSource = `
             attribute vec4 aVertexPosition;
-            void main() {
-              gl_Position = aVertexPosition;
-            }
+            void main() { gl_Position = aVertexPosition; }
           `;
-
           const fsSource = `
             precision highp float;
             uniform vec2 iResolution;
             uniform float iTime;
-
             const float overallSpeed = 0.2;
             const float gridSmoothWidth = 0.015;
             const float axisWidth = 0.05;
@@ -786,34 +915,26 @@
             const float minOffsetSpread = 0.6;
             const float maxOffsetSpread = 2.0;
             const int linesPerGroup = 16;
-
             #define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))
             #define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))
             #define drawCrispLine(pos, halfWidth, t) smoothstep(halfWidth + gridSmoothWidth, halfWidth, abs(pos - (t)))
-
             float random(float t) {
               return (cos(t) + cos(t * 1.3 + 1.3) + cos(t * 1.4 + 1.4)) / 3.0;
             }
-
             float getPlasmaY(float x, float horizontalFade, float offset) {
               return random(x * lineFrequency + iTime * lineSpeed) * horizontalFade * lineAmplitude + offset;
             }
-
             void main() {
               vec2 fragCoord = gl_FragCoord.xy;
               vec2 uv = fragCoord.xy / iResolution.xy;
               vec2 space = (fragCoord - iResolution.xy / 2.0) / iResolution.x * 2.0 * scale;
-
               float horizontalFade = 1.0 - (cos(uv.x * 6.28) * 0.5 + 0.5);
               float verticalFade = 1.0 - (cos(uv.y * 6.28) * 0.5 + 0.5);
-
               space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);
               space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;
-
               vec4 lines = vec4(0.0);
               vec4 bgColor1 = vec4(0.1, 0.1, 0.3, 1.0);
               vec4 bgColor2 = vec4(0.3, 0.1, 0.5, 1.0);
-
               for(int l = 0; l < linesPerGroup; l++) {
                 float normalizedLineIndex = float(l) / float(linesPerGroup);
                 float offsetTime = iTime * offsetSpeed;
@@ -823,88 +944,68 @@
                 float offset = random(offsetPosition + offsetTime * (1.0 + normalizedLineIndex)) * mix(minOffsetSpread, maxOffsetSpread, horizontalFade);
                 float linePosition = getPlasmaY(space.x, horizontalFade, offset);
                 float line = drawSmoothLine(linePosition, halfWidth, space.y) / 2.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y);
-
                 float circleX = mod(float(l) + iTime * lineSpeed, 25.0) - 12.0;
                 vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));
                 float circle = drawCircle(circlePosition, 0.01, space) * 4.0;
-
                 lines += (line + circle) * lineColor * rand;
               }
-
               vec4 fragColor = mix(bgColor1, bgColor2, uv.x);
               fragColor *= verticalFade;
               fragColor.a = 1.0;
               fragColor += lines;
-
               gl_FragColor = fragColor;
             }
           `;
 
-          const loadShader = (shaderType, source) => {
-            const shader = gl.createShader(shaderType);
-            gl.shaderSource(shader, source);
-            gl.compileShader(shader);
-            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-              gl.deleteShader(shader);
-              return null;
-            }
-            return shader;
+          const loadShader = (type, src) => {
+            const s = gl.createShader(type);
+            gl.shaderSource(s, src);
+            gl.compileShader(s);
+            return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : (gl.deleteShader(s), null);
           };
 
-          const vertexShader = loadShader(gl.VERTEX_SHADER, vsSource);
-          const fragmentShader = loadShader(gl.FRAGMENT_SHADER, fsSource);
+          const vs = loadShader(gl.VERTEX_SHADER, vsSource);
+          const fs = loadShader(gl.FRAGMENT_SHADER, fsSource);
 
-          if (vertexShader && fragmentShader) {
-            const shaderProgram = gl.createProgram();
-            gl.attachShader(shaderProgram, vertexShader);
-            gl.attachShader(shaderProgram, fragmentShader);
-            gl.linkProgram(shaderProgram);
+          if (vs && fs) {
+            const prog = gl.createProgram();
+            gl.attachShader(prog, vs);
+            gl.attachShader(prog, fs);
+            gl.linkProgram(prog);
 
-            if (gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
-              const positionBuffer = gl.createBuffer();
-              gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-              gl.bufferData(
-                gl.ARRAY_BUFFER,
-                new Float32Array([
-                  -1.0, -1.0,
-                   1.0, -1.0,
-                  -1.0,  1.0,
-                   1.0,  1.0
-                ]),
-                gl.STATIC_DRAW
-              );
+            if (gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+              const buf = gl.createBuffer();
+              gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+              gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
 
-              const attribLocation = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-              const resolutionLocation = gl.getUniformLocation(shaderProgram, "iResolution");
-              const timeLocation = gl.getUniformLocation(shaderProgram, "iTime");
+              const attrib = gl.getAttribLocation(prog, "aVertexPosition");
+              const resLoc = gl.getUniformLocation(prog, "iResolution");
+              const timeLoc = gl.getUniformLocation(prog, "iTime");
 
-              const resizeCanvas = () => {
+              const resize = () => {
                 const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
                 shaderCanvas.width = Math.floor(window.innerWidth * dpr);
                 shaderCanvas.height = Math.floor(window.innerHeight * dpr);
                 gl.viewport(0, 0, shaderCanvas.width, shaderCanvas.height);
               };
 
-              window.addEventListener("resize", resizeCanvas);
-              resizeCanvas();
+              window.addEventListener("resize", resize);
+              resize();
 
-              const startTime = performance.now();
+              const t0 = performance.now();
               const render = () => {
-                const currentTime = (performance.now() - startTime) / 1000;
-                gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                const t = (performance.now() - t0) / 1000;
+                gl.clearColor(0,0,0,1);
                 gl.clear(gl.COLOR_BUFFER_BIT);
-
-                gl.useProgram(shaderProgram);
-                gl.uniform2f(resolutionLocation, shaderCanvas.width, shaderCanvas.height);
-                gl.uniform1f(timeLocation, currentTime);
-
-                gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-                gl.vertexAttribPointer(attribLocation, 2, gl.FLOAT, false, 0, 0);
-                gl.enableVertexAttribArray(attribLocation);
+                gl.useProgram(prog);
+                gl.uniform2f(resLoc, shaderCanvas.width, shaderCanvas.height);
+                gl.uniform1f(timeLoc, t);
+                gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+                gl.vertexAttribPointer(attrib, 2, gl.FLOAT, false, 0, 0);
+                gl.enableVertexAttribArray(attrib);
                 gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
                 requestAnimationFrame(render);
               };
-
               requestAnimationFrame(render);
             }
           }
@@ -913,26 +1014,19 @@
         }
       }
 
+      // Scroll reveal
       const revealEls = document.querySelectorAll(".reveal");
       const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add("in-view");
-              observer.unobserve(entry.target);
-            }
-          });
-        },
+        (entries) => entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add("in-view"); observer.unobserve(e.target); }
+        }),
         { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
       );
+      revealEls.forEach(el => observer.observe(el));
 
-      revealEls.forEach((el) => observer.observe(el));
-
-      const staggerParents = document.querySelectorAll(".stagger");
-      staggerParents.forEach((parent) => {
-        const children = parent.querySelectorAll(".reveal");
-        children.forEach((child, index) => {
-          child.style.transitionDelay = (index * 100) + "ms";
+      document.querySelectorAll(".stagger").forEach(parent => {
+        parent.querySelectorAll(".reveal").forEach((child, i) => {
+          child.style.transitionDelay = (i * 100) + "ms";
         });
       });
     })();
